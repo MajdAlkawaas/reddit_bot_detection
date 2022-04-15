@@ -32,39 +32,6 @@ class Redditor:
 
 
 
-
-class Post:
-	created_utc = ''
-	num_comments = 0
-	over_18 = True
-	score = 0
-	subreddit = False
-	title = ""
-	selftext = ""
-
-	def Post(self):
-		self.created_utc = ''
-		self.num_comments = 0
-		self.over_18 = True
-		self.score = 0
-		self.subreddit = False
-		self.title = ""
-		self.selftext = ""
-
-
-class Comment:
-    body = ''
-    created_utc = 0
-    subreddit = ""
-    score = 0
-    
-    def Comment(self):
-        self.body = ''
-        self.created_utc = 0
-        self.subreddit = ""
-        self.score = 0
-
-
 reddit = praw.Reddit(client_id  = CLIENT_ID, client_secret = SECRET_TOKEN, user_agent = 'MyAPI/0.0.1')
 
 def filter_usernames(usernames):
