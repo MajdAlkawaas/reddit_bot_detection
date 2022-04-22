@@ -1,7 +1,7 @@
 import praw
 import json
 import urllib.request
-import csv
+import pandas as pd
 
 PASSWORD = 'j=HUZ`6S8B'
 USERNAME = 'CMPS287_project'
@@ -29,8 +29,35 @@ class Redditor:
 	def __setitem__(self, key, value):
 		self[key] = value
 
+class Post:
+	created_utc = ''
+	num_comments = 0
+	over_18 = True
+	score = 0
+	subreddit = False
+	title = ""
+	selftext = ""
 
+	def Post(self):
+		self.created_utc = ''
+		self.num_comments = 0
+		self.over_18 = True
+		self.score = 0
+		self.subreddit = False
+		self.title = ""
+		self.selftext = ""
 
+class Comment:
+    body = ''
+    created_utc = 0
+    subreddit = ""
+    score = 0
+    
+    def Comment(self):
+        self.body = ''
+        self.created_utc = 0
+        self.subreddit = ""
+        self.score = 0
 
 reddit = praw.Reddit(client_id  = CLIENT_ID, client_secret = SECRET_TOKEN, user_agent = 'MyAPI/0.0.1')
 
@@ -41,14 +68,10 @@ def filter_usernames(usernames):
 			authors.append(username)
 	return authors
 
-
-
 # Scrape user information and store it in csv file
 def scrape_users(usernames, is_bot):
-    csvfile = open('Data Scrapping\data.csv', 'w' , newline='')
-    writer = csv.writer(csvfile)
-    writer.writerow(['Username', 'post_karma', 'comment_karma' , 'cake_day' , 'Comments' , 'posts' , 'is_bot'])
-
+    data = {}
+    i = 0
     for author in filter_usernames(usernames):
         redditor = Redditor()
         try:
@@ -65,9 +88,12 @@ def scrape_users(usernames, is_bot):
             continue
         redditor.comments = get_user_comments(author)
         redditor.posts = get_user_posts(author)
-        writer.writerow([redditor.username, redditor.post_karma, redditor.comment_karma , redditor.cake_day , redditor.comments , redditor.posts , redditor.is_bot])
+        
+        data[i] = [redditor.username, redditor.post_karma, redditor.comment_karma , redditor.cake_day , redditor.comments , redditor.posts , redditor.is_bot]
+        i+=1
+    dataframe = pd.DataFrame.from_dict(data, orient='index', columns=['Username', 'post_karma', 'comment_karma' , 'cake_day' , 'Comments' , 'posts' , 'is_bot'])
+    dataframe.to_csv('data.csv')
 
-    csvfile.close()
 
 def get_user_comments(author):
 	comment_counter = 500
@@ -110,7 +136,6 @@ def create_comment_object_from_comment_data(comment):
 		'subreddit': subreddit
 	}
 	return comment_object
-
 
 def get_user_posts(author):
 	post_counter = 500
@@ -164,10 +189,6 @@ def get_post_data_from_user(author, last_utc):
 	encoding = web_url.info().get_content_charset('utf-8')
 	data = json.loads(contents.decode(encoding))
 	return data
-
-
-
-
 
 def get_reddit_users_after_utc(last_utc):
 	url = 'https://api.pushshift.io/reddit/comment/search?after=' + last_utc + '&before=1523318400&size=500'
