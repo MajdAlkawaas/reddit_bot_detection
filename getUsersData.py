@@ -2,64 +2,17 @@ import praw
 import json
 import urllib.request
 import pandas as pd
+from items import Redditor, Post, Comment
+from os import getenv
 
-PASSWORD = 'j=HUZ`6S8B'
-USERNAME = 'CMPS287_project'
-CLIENT_ID = 'd5w9jc7mmyeLEL2DG1wtxg'
-SECRET_TOKEN = 'HIOuTew4HunOVSJeFT47Yi4sCkdBCA' 
+PASSWORD     = 'j=HUZ`6S8B'
+USERNAME     = 'CMPS287_project'
+CLIENT_ID    = 'd5w9jc7mmyeLEL2DG1wtxg'
+SECRET_TOKEN = 'HIOuTew4HunOVSJeFT47Yi4sCkdBCA'
 
-class Redditor:
-	username = ''
-	post_karma = 0
-	comment_karma = 0
-	cake_day = 0
-	is_bot = False
-	comments = []
-	posts = []
-
-	def Redditor(self):
-		self.username = ''
-		self.post_karma = 0
-		self.comment_karma = 0
-		self.cake_day = 0
-		self.is_bot = False
-		self.comments = []
-		self.posts = []
-
-	def __setitem__(self, key, value):
-		self[key] = value
-
-class Post:
-	created_utc = ''
-	num_comments = 0
-	over_18 = True
-	score = 0
-	subreddit = False
-	title = ""
-	selftext = ""
-
-	def Post(self):
-		self.created_utc = ''
-		self.num_comments = 0
-		self.over_18 = True
-		self.score = 0
-		self.subreddit = False
-		self.title = ""
-		self.selftext = ""
-
-class Comment:
-    body = ''
-    created_utc = 0
-    subreddit = ""
-    score = 0
-    
-    def Comment(self):
-        self.body = ''
-        self.created_utc = 0
-        self.subreddit = ""
-        self.score = 0
-
-reddit = praw.Reddit(client_id  = CLIENT_ID, client_secret = SECRET_TOKEN, user_agent = 'MyAPI/0.0.1')
+reddit = praw.Reddit(client_id  = CLIENT_ID, 
+                     client_secret = SECRET_TOKEN, 
+                     user_agent = 'MyAPI/0.0.1')
 
 def filter_usernames(usernames):
 	authors = []
@@ -71,7 +24,7 @@ def filter_usernames(usernames):
 # Scrape user information and store it in csv file
 def scrape_users(usernames, is_bot):
     data = {}
-    i = 0
+    i, deleted_count, exiting_count = 0, 0, 0
     for author in filter_usernames(usernames):
         redditor = Redditor()
         try:
@@ -82,9 +35,11 @@ def scrape_users(usernames, is_bot):
             redditor.comment_karma = user.comment_karma
             redditor.cake_day = user.created_utc
             redditor.is_bot = is_bot
-            print('pass')
+            print('pass user #{}'.format(exiting_count))
+            exiting_count +=1
         except Exception as e:
-            print("Reddit account " + author + " has been deleted")
+            print("Reddit account {} has been deleted #{}".format(author, deleted_count) )
+            deleted_count += 1
             continue
         redditor.comments = get_user_comments(author)
         redditor.posts = get_user_posts(author)
