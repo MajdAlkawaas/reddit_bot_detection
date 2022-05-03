@@ -18,9 +18,9 @@ password = quote_plus('CMPS287_project_password')
 URI = "mongodb+srv://" + username + ":" + password + "@cluster0.unwq2.mongodb.net"
 
 # reddit = praw.Reddit('bot1', user_agent='bot1 user agent')
-reddit = praw.Reddit(client_id  = CLIENT_ID, 
-                     client_secret = SECRET_TOKEN, 
-                     user_agent = 'MyAPI/0.0.1')
+reddit = praw.Reddit(client_id     = CLIENT_ID, 
+                     client_secret = SECRET_TOKEN,
+                     user_agent    = 'MyAPI/0.0.1')
 
 client = pymongo.MongoClient(URI)
 
@@ -136,10 +136,10 @@ def create_comment_object_from_comment_data(comment):
         subreddit = ''
 
     comment_object = {
-        'body': comment['body'],
+        'body'       : comment['body'],
         'created_utc': comment['created_utc'],
-        'score': comment['score'],
-        'subreddit': subreddit
+        'score'      : comment['score'],
+        'subreddit'  : subreddit
     }
     return comment_object
 
@@ -162,12 +162,12 @@ def create_post_object_from_post_data(post):
         subreddit = ''
 
     post_object = {
-        'created_utc': post['created_utc'],
+        'created_utc' : post['created_utc'],
         'num_comments': post['num_comments'],
-        'over_18': post['over_18'],
-        'score': post['score'],
-        'subreddit': subreddit,
-        'title': post['title']
+        'over_18'     : post['over_18'],
+        'score'       : post['score'],
+        'subreddit'   : subreddit,
+        'title'       : post['title']
     }
 
     # Some posts don't have selftext
