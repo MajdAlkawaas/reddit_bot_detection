@@ -1,0 +1,1 @@
+Keep this folder to save processed data for comments and comments_sub.
