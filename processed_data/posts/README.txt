@@ -1,0 +1,1 @@
+Keep this folder to save processed data for posts and posts_sub.
