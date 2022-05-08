@@ -9,13 +9,17 @@ from collections import Counter
 import pickle
 import os
 
+import certifi
+ca = certifi.where()
+
+
 # client = pymongo.MongoClient('mongodb://localhost:27017')
 
 username = quote_plus('CMPS287_project')
 password = quote_plus('CMPS287_project_password')
 
 URI = "mongodb+srv://" + username + ":" + password + "@cluster0.unwq2.mongodb.net"
-client = pymongo.MongoClient(URI)
+client = pymongo.MongoClient(URI , tlsCAFile=ca)
 
 db = client['redditors']
 collection = db['redditors']
