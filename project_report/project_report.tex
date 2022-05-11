@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 
 \title{CMPS 287 - Final Project Report}
-\author{Nathalie Nassar, \\Majd Al-Kawaas,\\ Mohamed Louai Bouzaher,\\ and Melhem Rahme}
+\author{Nathalie Nassar \\Majd Al-Kawaas\\ Mohamed Louai Bouzaher\\ Melhem Rahmeh}
 \date{May 2022}
 
 \begin{document}
@@ -10,32 +10,24 @@
 \maketitle
 
 \section{Abstract}
-Bot accounts have been a significant problem for social media websites especially Twitter and Reddit, most bots are harmful and they seek to create chaos or generate useless content on popular channels of social media communication. Our solution is a set of different machine learning models that performs Reddit bot detection on different sets of data about the users. We have chosen this approach to boost the accuracy of the results. \par
+Bot accounts have been a significant problem for social media websites especially Twitter and Reddit, most bots are harmful and they seek to create chaos or generate useless content on popular channels of social media communication. Our solution is a set of different machine learning models that performs Reddit bot detection 
+on different sets of data about the users. We have chosen this approach to boost the accuracy of the results
 
-We have chosen comment/post level detection because account-level approaches require increased amounts of user data and there is a scarcity of [ADD HERE], whereas comments and posts can be analyzed using Natural Language Processing techniques.\par
+We have chosen comment level detection because account-level approaches require increased amounts of user data and there is a scarcity of [], whereas comments can be analyzed using Natural Language Processing techniques.
 
-The models we proposed are a logistical regression model for the comment body, a [insert your best model here] model for the comment-sub data, a [insert your best model here] model for the post title data, and a [insert your best model here] model for the [Nat model] \par
+The models we proposed are a logistical regression model for the comment body, a [insert your best model here] model for the comment-sub data, a k-nearest neighbors (KNN) algorithm for the post title data, and a [insert your best model here] model for the [Nat model]
 
 \section{Introduction}
 
-Trolls and bots in social media are widespread, and it has been proven that they have unrecognized and significant effects on the users. The actions of a bot might affect our opinions, and thus the quality and accuracy of information we are getting. Moreover, some bots and trolls might be considered bad actors for having negative political, economic, and health effects. \par
-Reddit, also known as "the front page of the internet,” is a social media platform for news aggregation and discussions. On Reddit, people are able to form communities around shared interests or sometimes shared dislikes. The power these communities wield is constantly increasing, and it was shown, a year ago, by the r/wallstreetbets subreddit; the participants of this subreddit were able to manipulate the stock market and drive the prices of GameStop stock to a significant number.  Furthermore,  a huge number of bots has been detected by the users and moderators on this specific subreddit. Another instance of bots interfering with the public opinion was annoucned in Reddit's Transparency report of 2017.  In this report have released more than 950 Russian bots accounts. These accounts were controlled by Russian organizations and most of their activities were focused on political communities on Reddit mostly relating to the 2016 US Election. In addition, some bots exist to downvote or upvote specific content or that of a specific user for marketing, or economic purposes. \par
-While bot detection is being explored on other high profile platforms such as Twitter with deep learning, there is extremely limited work on bot detection applications on Reddit, and in the wake of the ever-changing political and economic scene, there is an increasing need for accurate methods of detecting bots on such platform given that they become a source of information for millions of users. Moreover, The nature of Reddit enables a very suitable environment for bots from all the existing social media platforms. The behavior of these bots, on Reddit, is turning some of the communities into unsafe and insecure online spaces that require termination.
+Trolls and bots in social media are widespread, and it has been proven that they have unrecognized and significant effects on the users. The actions of a bot might affect our opinions, and thus the quality and accuracy of information we are getting. Moreover, some bots and trolls might be considered bad actors for having negative political, economic, and health effects.
+Reddit, also known as "the front page of the internet,” is a social media platform for news aggregation and discussions. On Reddit, people are able to form communities around shared interests or sometimes shared dislikes. The power these communities wield is constantly increasing, and it was shown, a year ago, by the r/wallstreetbets subreddit; the participants of this subreddit were able to manipulate the stock market and drive the prices of GameStop stock to a significant number. A huge number of bots has been detected by the users and moderators on this specific subreddit. Another instance of bots interfering with the public opinion is more than 950 Russian bots accounts released in Reddit's Transparency report of 2017, these accounts were controlled by Russian organizations and most of their activities were focused on political communities on Reddit mostly relating to the 2016 US Election. In addition, some bots exist to downvote or upvote specific content or that of a specific user for marketing, or economic purposes. While bot detection is being explored on other high profile platforms such as Twitter
+with deep learning, there is extremely limited work on troll detection applications on Reddit, and in the wake of the ever-changing political and economic scene, there is an increasing need for accurate methods of detecting bots on such platform given that they become a source of information for millions of users. Moreover, The nature of Reddit enables a very suitable environment for bots from all the existing social media platforms. The behavior of these bots, on Reddit, is turning some of the communities into unsafe and insecure online spaces that require termination.
 
 \section{Related Work}
-    As we have mentioned there is not much work on the Reddit bot detection issue but some parties are making some great efforts in this matter. Even Reddit never announced any in deepth details on their efforts or progress with this issue but some work on the matter has been done by Reddit community members.\par
-    
-     A group of graduate students at Stanford University worked on this problem for their thesis. They have applied deep learning to Reddit in an exploration of its viability in comment-level bot detection with a limited supervised dataset. They have performed a contextual analysis of the comments of these users using a variety of deep learning models and architectures (BERT and LSTM, RCNNs) they have achieved an AUC of 84.6\% using an RCNN architecture on their very minimal dataset.\par
-     
-     Medium project by Brandon Punturo, in this project the author dependent on the list of bots we are depending on. He built optimized random forest classifier and they final results and metrics were not promising.\par
-     
-     [ADD A PARAGRAPH ABOUT THE PAPER WE ARE USING OR NOT]
-     
-     Despite the fact that Reddit has significantly less labeled bot datasets than Twitter, the issue is gaining traction, and Reddit has escalated its attempts to combat it. The data of around 900 Russian troll accounts that submitted over 7000 total comments was revealed in Reddit's 2017 transparency report, producing an extremely limited but workable supervised dataset. This list or Russian bots was started by a professor at Boston University and then Reddit took over the process \par
-     
-     
-    %  The only similar work on comment level identification currently available is a Medium project by Brandon Punturo, \par
-
+As we have mentioned there is not much work on the Reddit bot detection issue but some parties are making some great efforts in this matter. Even Reddit never announced any efforts on the matter but some work on the matter has been done by Reddit community members.
+    \begin{itemize}
+        \item A group of graduate students at Stanford University worked on this problem for their thesis. They have applied deep learning to Reddit in an exploration of its viability in comment-level bot detection with a limited supervised dataset. They have performed a contextual analysis of the comments of these users using a variety of deep learning models and architectures (BERT and LSTM, RCNNs) they have achieved an AUC of 84.6\% using an RCNN architecture on their very minimal dataset.
+    \end{itemize}
     
 \section{Dataset}
 Our process of acquiring the data follows these steps:
@@ -73,31 +65,6 @@ The dataset consist of three main parts and each part has of the following featu
             \end{enumerate}
     \end{enumerate}
 \section{Model}
-    Given that we have different types of data (dates, comment/post title) we have four different models each handling a different form of data. This also contributed to boosting the accuracy given that [ADD HERE].\\
-    For each portion of the
-    We have a the following models
-    \begin{enumerate}
-        \item comment subreddit model
-        \item comment body model
-        \item Post title model
-        \item Post subreddit model
-    \end{enumerate}
-    
-    \subsection{comment subreddit}
-        We experimented with the following (SVM, LOGREG write yours here )\\
-        The best model was [] with [score here]
-    \subsection{comment body}
-        We experimented with the following (SVM, LOGREG write yours here )\\
-        The best model was [] with [score here]
-    \subsection{Post title}
-        We experimented with the following (SVM, LOGREG write yours here )\\
-        The best model was [] with [score here]
-    \subsection{Post subreddit}  
-        We experimented with the following (SVM, LOGREG write yours here )\\
-        The best model was [] with [score here]
+
 \section{Results}
-    \subsection{Learning curves}
-    \subsection{Conf matrix}
 \end{document}
-
-
