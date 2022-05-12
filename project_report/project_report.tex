@@ -10,8 +10,10 @@
 \captionsetup{compatibility=false}
 
 \title{CMPS 287 - Final Project Report}
-\author{Majd Al-Kawaas  \hspace*{5mm} \url{mma250@mail.aub.edu},\\  Melhem Rahmeh \hspace*{5mm} \url{mfr08@mail.aub.edu}, \\ Mohamed Louai Bouzaher \hspace*{5mm} \url{mlb03@mail.aub.edu},\\ Nathalie Nassar \hspace*{5mm} \url{nwn05@mail.aub.edu}
-
+\author{
+Majd Alkawaas \hspace*{5mm} \href{mailto:mma250@mail.aub.edu}{mma250@mail.aub.edu},\\Melhem Rahmeh  \hspace*{5mm} \href{mailto:mfr08@mail.aub.edu}{mfr08@mail.aub.edu},\\ 
+Mohamed Louai Bouzaher \hspace*{5mm} \href{mailto:mlb03@mail.aub.edu}{mlb03@mail.aub.edu},\\ 
+Nathalie Nassar \hspace*{5mm} \href{mailto:nwn05@mail.aub.edu}{nwn05@mail.aub.edu}
 }
 \date{May 2022}
 
@@ -96,8 +98,17 @@ The dataset consist of three main parts and each part has of the following featu
                 \item Sub-reddit: the Sub-reddit at which the post was posted.
             \end{enumerate}
     \end{enumerate}
+As for data preprocessing, we have used  python and the Natural Language Toolkit (NLTK), we performed the following steps:\\
+\begin{enumerate}
+    \item Removed all the special characters, stopwords, and all single characters,  and handled spacing and uppercases latters.
+    \item Tokenization (for breaking phrases, and passages into tokens to help the computer understand the text). Experimented with both Stemming and lemmatization.
+    \item Document Representation with TF-IDF (Term-Frequency Inverse Document-Frequency), to be able to represent each document as a vector of terms.
+\end{enumerate}
+Addressing imbalances in the dataset:\\
 
-    
+For the comments body data, we have an extreme imbalance between the normal user class and the bot user class the original ratio of normal:bot is around 11:1  as you can see in the figure so we performed under sampling on the normal users class, and the new ratio of normal:bot is around 3:1.
+
+
 \section{Model}
 Our project follows the following pipeline. \par
 \begin{figure}[H]
