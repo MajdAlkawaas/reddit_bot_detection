@@ -5,10 +5,15 @@
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
+\usepackage{float}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
 
 \title{CMPS 287 - Final Project Report}
-\author{Majd Al-Kawaas  \hspace*{5mm} \url{mma250@mail.aub.edu},\\  Melhem Rahmeh \hspace*{5mm} \url{mfr08@mail.aub.edu}, \\ Mohamed Louai Bouzaher \hspace*{5mm} \url{mlb03@mail.aub.edu},\\ Nathalie Nassar \hspace*{5mm} \url{nwn05@mail.aub.edu}
-
+\author{
+Majd Alkawaas \hspace*{5mm} \href{mailto:mma250@mail.aub.edu}{mma250@mail.aub.edu},\\Melhem Rahmeh  \hspace*{5mm} \href{mailto:mfr08@mail.aub.edu}{mfr08@mail.aub.edu},\\ 
+Mohamed Louai Bouzaher \hspace*{5mm} \href{mailto:mlb03@mail.aub.edu}{mlb03@mail.aub.edu},\\ 
+Nathalie Nassar \hspace*{5mm} \href{mailto:nwn05@mail.aub.edu}{nwn05@mail.aub.edu}
 }
 \date{May 2022}
 
@@ -16,24 +21,24 @@
 
 \maketitle
 
-\section{Abstract}
 Bot accounts have been a significant problem for social media websites especially Twitter and Reddit, most bots are harmful and they seek to create chaos or generate useless content on popular channels of social media communication. Our solution is a set of different machine learning models that performs Reddit bot detection on different sets of data about the users. We have chosen this approach to boost the accuracy of the results. \par
 
-We have chosen comment/post level detection because account-level approaches require increased amounts of user data and there is a scarcity of [ADD HERE], whereas comments and posts can be analyzed using Natural Language Processing techniques.\par
+We have chosen comment/post level detection because account-level approaches require increased amounts of user data and there is a scarcity of officially verified bot accounts, whereas comments and posts can be analyzed using Natural Language Processing techniques.\par
 
-The best model we propose is logistical regression, is it gave the highest accuracy for the 4 detection levels  we are approaching: \\
+The best model we proposed is logistical regression, it is giving the highest accuracy for the 4 classification levels we are proposing: \\
 \begin{itemize}
 \item User Posts Titles : $90.4\%$
-\item Subreddits of User Posts: $92.3\%$
+\item Sub-reddits of User Posts: $92.3\%$
 \item User Comments : $91.3\%$
-\item Subreddits of User Comments : $90.5\%$
+\item Sub-reddits of User Comments : $90.5\%$
+
 
 \end{itemize}
 
 \section{Introduction}
 
 Trolls and bots in social media are widespread, and it has been proven that they have unrecognized and significant effects on the users. The actions of a bot might affect our opinions, and thus the quality and accuracy of information we are getting. Moreover, some bots and trolls might be considered bad actors for having negative political, economic, and health effects. \par
-Reddit, also known as "the front page of the internet,” is a social media platform for news aggregation and discussions. On Reddit, people are able to form communities around shared interests or sometimes shared dislikes. The power these communities wield is constantly increasing, and it was shown, a year ago, by the r/wallstreetbets subreddit; the participants of this subreddit were able to manipulate the stock market and drive the prices of GameStop stock to a significant number.  Furthermore,  a huge number of bots has been detected by the users and moderators on this specific subreddit. Another instance of bots interfering with the public opinion was annoucned in Reddit's Transparency report of 2017.  In this report have released more than 950 Russian bots accounts. These accounts were controlled by Russian organizations and most of their activities were focused on political communities on Reddit mostly relating to the 2016 US Election. In addition, some bots exist to downvote or upvote specific content or that of a specific user for marketing, or economic purposes. \par
+Reddit, also known as "the front page of the internet,” is a social media platform for news aggregation and discussions. On Reddit, people are able to form communities around shared interests or sometimes shared dislikes. The power these communities wield is constantly increasing, and it was shown, a year ago, by the r/wallstreetbets Sub-reddit; the participants of this Sub-reddit were able to manipulate the stock market and drive the prices of GameStop stock to a significant number.  Furthermore,  a huge number of bots has been detected by the users and moderators on this specific Sub-reddit. Another instance of bots interfering with the public opinion was annoucned in Reddit's Transparency report of 2017.  In this report have released more than 950 Russian bots accounts. These accounts were controlled by Russian organizations and most of their activities were focused on political communities on Reddit mostly relating to the 2016 US Election. In addition, some bots exist to downvote or upvote specific content or that of a specific user for marketing, or economic purposes. \par
 While bot detection is being explored on other high profile platforms such as Twitter with deep learning, there is extremely limited work on bot detection applications on Reddit, and in the wake of the ever-changing political and economic scene, there is an increasing need for accurate methods of detecting bots on such platform given that they become a source of information for millions of users. Moreover, The nature of Reddit enables a very suitable environment for bots from all the existing social media platforms. The behavior of these bots, on Reddit, is turning some of the communities into unsafe and insecure online spaces that require termination.
 
 \section{Related Work}
@@ -43,9 +48,9 @@ While bot detection is being explored on other high profile platforms such as Tw
      
      Medium project by Brandon Punturo, in this project the author dependent on the list of bots we are depending on. He built optimized random forest classifier and they final results and metrics were not promising.\par
      
-     [ADD A PARAGRAPH ABOUT THE PAPER WE ARE USING OR NOT]
      
      Despite the fact that Reddit has significantly less labeled bot datasets than Twitter, the issue is gaining traction, and Reddit has escalated its attempts to combat it. The data of around 900 Russian troll accounts that submitted over 7000 total comments was revealed in Reddit's 2017 transparency report, producing an extremely limited but workable supervised dataset. This list or Russian bots was started by a professor at Boston University and then Reddit took over the process \par
+     
      
      
     %  The only similar work on comment level identification currently available is a Medium project by Brandon Punturo, \par
@@ -60,10 +65,14 @@ Our process of acquiring the data follows these steps:
         \item Retrieve the accounts posts, and comments using the Reddit official API, and the PushShift API (Unofficial API).
         \item Store the data in a MongoDB server given that a user has multiple comments and posts and storing this data as CSV means storing the parts of the data multiple times.\\
         That's the database diagram, and you can find the dataset explanation below.\\ \\
-            \includegraphics[width=10cm, height=8cm]{db}\\
         \item Retrieve the required data depending on the model i.e training the comments body model we retrieve the comments and the label of all the users in our data. \\ \\
     \end{enumerate}
 The dataset consist of three main parts and each part has of the following features:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{db}
+        \caption{Database relational model}
+    \end{figure}
     \begin{enumerate}
         \item User Data
             \begin{enumerate}
@@ -77,7 +86,7 @@ The dataset consist of three main parts and each part has of the following featu
             \begin{enumerate}
                 \item comment body
                 \item creation date: a timestamp of date and time.
-                \item subreddit: the subreddit at with comment was posted.
+                \item Sub-reddit: the Sub-reddit at with comment was posted.
             \end{enumerate}
         \item Comment Data
             \begin{enumerate}
@@ -85,21 +94,49 @@ The dataset consist of three main parts and each part has of the following featu
                 \item post body
                 \item number of comments
                 \item creation date: a timestamp of date and time.
-                \item subreddit: the subreddit at which the post was posted.
+                \item Sub-reddit: the Sub-reddit at which the post was posted.
             \end{enumerate}
     \end{enumerate}
+As for \textbf{data preprocessing}, we have used  python and the Natural Language Toolkit (NLTK), we performed the following steps:\\
+\begin{enumerate}
+    \item Removed all the special characters, stopwords, and all single characters,  and handled spacing and uppercases latters.
+    \item Tokenization (for breaking phrases, and passages into tokens to help the computer understand the text). Experimented with both Stemming and lemmatization.
+    \item Document Representation with TF-IDF (Term-Frequency Inverse Document-Frequency), to be able to represent each document as a vector of terms.
+\end{enumerate}
+\textbf{Addressing imbalances in the dataset}:\\
 
-    
+For the comments body data, we have an extreme imbalance between the normal user class and the bot user class the original ratio of normal:bot is around 11:1  as you can see in the figure so we performed under sampling on the normal users class, and the new ratio of normal:bot is around 3:1.
+
+    \begin{figure}[H]
+
+        \begin{subfigure}[t]{.5\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{images/before.png}
+                \caption{Before Under Sampling}
+            \end{subfigure}
+        \hfill
+        \begin{subfigure}[t]{.5\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{images/under.png}
+                            \caption{After Under Sampling}
+        \end{subfigure}
+    \end{figure}
+
 \section{Model}
-    Given that we have different types of data (dates, comment/post title) we have four different models each handling a different form of data. This also contributed to boosting the accuracy given that [ADD HERE].\\
-    For each portion of the
-    We have a the following models
-    \begin{enumerate}
-        \item comment subreddit model
-        \item comment body model
-        \item Post title model
-        \item Post subreddit model
-    \end{enumerate}
+Our project follows the following pipeline. \par
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=15cm ,keepaspectratio]{pipeline}
+    \caption{Database relational model}
+\end{figure} 
+Given that we have different types of data (dates, comment/post title) we have four different models each handling a different form of data. This is also contributing to boosting the accuracy given that the models have varying F1 Scores.\\
+For each subset of the data We have a the following models
+\begin{enumerate}
+    \item comment Sub-reddit model
+    \item comment body model
+    \item Post title model
+    \item Post Sub-reddit model
+\end{enumerate}
     
 For each one of the mentioned models, we experimented with different combinations of the following models: SVM , Logistical Regression, Neural Networks , KNN and Naive Bayes. 
         \begin{itemize}
@@ -212,34 +249,41 @@ For logistical Regression and SVM, we performed hyperparameter tuning using grid
      \hline
 
     \end{tabular}
-    \end{center}        
+    \end{center}  
+    
+            \subsection{model aggregation:}
+        For model aggregation, we performed weighted average vote using the following formula:
+        $$AggregatedProbability = \frac{(f1 * outProbcomments) 
+                                    + (f1 * outProb_{sub-comments}) 
+                                    + (f1 * outProb_{posts}) 
+                                    + (f1 * outProb_{sub-posts})}{4}$$
 \section{Results}
     
     \subsection{Learning curves}
     
-    \begin{figure}
-  \begin{subfigure}[t]{.5\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{1}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[t]{.5\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{2}
-  \end{subfigure}
+   \begin{figure}[H]
+        \begin{subfigure}[t]{.5\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{1}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[t]{.5\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{2}
+        \end{subfigure}
+    \end{figure}
+    \begin{figure}[H]
 
-  \medskip
-
-  \begin{subfigure}[t]{.5\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{3}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[t]{.5\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{4}
-  \end{subfigure}
-\end{figure}
+        \begin{subfigure}[t]{.5\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{3}
+            \end{subfigure}
+        \hfill
+        \begin{subfigure}[t]{.5\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{4}
+        \end{subfigure}
+    \end{figure}
         
     \subsection{Classification Reports / Confusion matrices}
 The best model for all 4 detection level is logistical regression. \\ \\
