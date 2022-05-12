@@ -99,11 +99,13 @@ The dataset consist of three main parts and each part has of the following featu
             \end{enumerate}
     \end{enumerate}
 As for \textbf{data preprocessing}, we have used  python and the Natural Language Toolkit (NLTK), we performed the following steps:\\
+
 \begin{enumerate}
     \item Removed all the special characters, stopwords, and all single characters,  and handled spacing and uppercases latters.
     \item Tokenization (for breaking phrases, and passages into tokens to help the computer understand the text). Experimented with both Stemming and lemmatization.
     \item Document Representation with TF-IDF (Term-Frequency Inverse Document-Frequency), to be able to represent each document as a vector of terms.
 \end{enumerate}
+
 \textbf{Addressing imbalances in the dataset}:\\
 
 For the comments body data, we have an extreme imbalance between the normal user class and the bot user class the original ratio of normal:bot is around 11:1  as you can see in the figure so we performed under sampling on the normal users class, and the new ratio of normal:bot is around 3:1.
@@ -123,12 +125,15 @@ For the comments body data, we have an extreme imbalance between the normal user
         \end{subfigure}
     \end{figure}
 
+
+
 \section{Model}
 Our project follows the following pipeline. \par
 \begin{figure}[H]
     \centering
     \includegraphics[width=15cm ,keepaspectratio]{pipeline}
-    \caption{Database relational model}
+
+    \caption{Pipeline}
 \end{figure} 
 Given that we have different types of data (dates, comment/post title) we have four different models each handling a different form of data. This is also contributing to boosting the accuracy given that the models have varying F1 Scores.\\
 For each subset of the data We have a the following models
@@ -258,9 +263,9 @@ For logistical Regression and SVM, we performed hyperparameter tuning using grid
                                     + (f1_B * outProb_B) 
                                     + (f1_C * outProb_c) 
                                     + (f1_D * outProb_D)}{4}$$
-        This experiment did not yield any good results given the scarcity of the data because not all normal users and bots have enough posts and comments, most posts and comments belong to a smaller subset of the collected accounts.\\
-        We have also experimented with compost features regarding the users' behavior (frequency of posting and comments, times of posting and commenting). This experiment also did not yield any promising results, and with a further investigation of our data and its source we discovered that an analysis conducted on the same dataset at Boston University discovered that all the Russian bot accounts were mirroring the behavior of the normal users.
-        
+        This experiment did not yield any good results given the scarcity of the data because not all normal users and bots have enough posts and comments, most posts and comments belong to a smaller subset of the collected accounts.\par
+        We have also experimented with compost features regarding the users' behavior (frequency of posting and comments, times of posting and commenting). This experiment also did not yield any promising results, and with a further investigation of our data and its source we discovered that an analysis conducted on the same dataset at Boston University discovered that all the Russian bot accounts were mirroring the behavior of the normal users.\par
+
 \section{Results}
     
     \subsection{Learning curves}
