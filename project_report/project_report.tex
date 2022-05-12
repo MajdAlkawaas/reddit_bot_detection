@@ -1,26 +1,21 @@
 \documentclass{article}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
-\usepackage{subcaption}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
-\usepackage{hyperref}
 \usepackage{float}
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
 
 \title{CMPS 287 - Final Project Report}
-\author{
-Majd Alkawaas \hspace*{5mm} \href{mailto:mma250@mail.aub.edu}{mma250@mail.aub.edu},\\Melhem Rahmeh  \hspace*{5mm} \href{mailto:mfr08@mail.aub.edu}{mfr08@mail.aub.edu},\\ 
-Mohamed Louai Bouzaher \hspace*{5mm} \href{mailto:mlb03@mail.aub.edu}{mlb03@mail.aub.edu},\\ 
-Nathalie Nassar \hspace*{5mm} \href{mailto:nwn05@mail.aub.edu}{nwn05@mail.aub.edu}
-}
+\author{Nathalie Nassar, \\Majd Al-Kawaas,\\ Mohamed Louai Bouzaher,\\ and Melhem Rahme}
 \date{May 2022}
 
 \begin{document}
 
 \maketitle
 
+\section{Abstract}
 Bot accounts have been a significant problem for social media websites especially Twitter and Reddit, most bots are harmful and they seek to create chaos or generate useless content on popular channels of social media communication. Our solution is a set of different machine learning models that performs Reddit bot detection on different sets of data about the users. We have chosen this approach to boost the accuracy of the results. \par
 
 We have chosen comment/post level detection because account-level approaches require increased amounts of user data and there is a scarcity of officially verified bot accounts, whereas comments and posts can be analyzed using Natural Language Processing techniques.\par
@@ -32,7 +27,6 @@ The best model we proposed is logistical regression, it is giving the highest ac
 \item User Comments : $91.3\%$
 \item Sub-reddits of User Comments : $90.5\%$
 
-
 \end{itemize}
 
 \section{Introduction}
@@ -42,16 +36,15 @@ Reddit, also known as "the front page of the internet,” is a social media plat
 While bot detection is being explored on other high profile platforms such as Twitter with deep learning, there is extremely limited work on bot detection applications on Reddit, and in the wake of the ever-changing political and economic scene, there is an increasing need for accurate methods of detecting bots on such platform given that they become a source of information for millions of users. Moreover, The nature of Reddit enables a very suitable environment for bots from all the existing social media platforms. The behavior of these bots, on Reddit, is turning some of the communities into unsafe and insecure online spaces that require termination.
 
 \section{Related Work}
-
     As we have mentioned there is not much work on the Reddit bot detection issue but some parties are making some great efforts in this matter. Even Reddit never announced any in deepth details on their efforts or progress with this issue but some work on the matter has been done by Reddit community members.\par
     
      A group of graduate students at Stanford University worked on this problem for their thesis. They have applied deep learning to Reddit in an exploration of its viability in comment-level bot detection with a limited supervised dataset. They have performed a contextual analysis of the comments of these users using a variety of deep learning models and architectures (BERT and LSTM, RCNNs) they have achieved an AUC of 84.6\% using an RCNN architecture on their very minimal dataset.\par
      
      Medium project by Brandon Punturo, in this project the author dependent on the list of bots we are depending on. He built optimized random forest classifier and they final results and metrics were not promising.\par
      
+     [ADD A PARAGRAPH ABOUT THE PAPER WE ARE USING OR NOT]
      
      Despite the fact that Reddit has significantly less labeled bot datasets than Twitter, the issue is gaining traction, and Reddit has escalated its attempts to combat it. The data of around 900 Russian troll accounts that submitted over 7000 total comments was revealed in Reddit's 2017 transparency report, producing an extremely limited but workable supervised dataset. This list or Russian bots was started by a professor at Boston University and then Reddit took over the process \par
-     
      
      
     %  The only similar work on comment level identification currently available is a Medium project by Brandon Punturo, \par
@@ -71,6 +64,7 @@ Our process of acquiring the data follows these steps:
 The dataset consist of three main parts and each part has of the following features:
     \begin{figure}[H]
         \centering
+        % \textbf{Your title}\par\medskip
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{db}
         \caption{Database relational model}
     \end{figure}
@@ -98,179 +92,109 @@ The dataset consist of three main parts and each part has of the following featu
                 \item Sub-reddit: the Sub-reddit at which the post was posted.
             \end{enumerate}
     \end{enumerate}
-As for \textbf{data preprocessing}, we have used  python and the Natural Language Toolkit (NLTK), we performed the following steps:\\
 
-\begin{enumerate}
-    \item Removed all the special characters, stopwords, and all single characters,  and handled spacing and uppercases latters.
-    \item Tokenization (for breaking phrases, and passages into tokens to help the computer understand the text). Experimented with both Stemming and lemmatization.
-    \item Document Representation with TF-IDF (Term-Frequency Inverse Document-Frequency), to be able to represent each document as a vector of terms.
-\end{enumerate}
-
-\textbf{Addressing imbalances in the dataset}:\\
-
-For the comments body data, we have an extreme imbalance between the normal user class and the bot user class the original ratio of normal:bot is around 11:1  as you can see in the figure so we performed under sampling on the normal users class, and the new ratio of normal:bot is around 3:1.
-
-    \begin{figure}[H]
-
-        \begin{subfigure}[t]{.5\textwidth}
-            \centering
-            \includegraphics[width=\linewidth]{images/before.png}
-                \caption{Before Under Sampling}
-            \end{subfigure}
-        \hfill
-        \begin{subfigure}[t]{.5\textwidth}
-            \centering
-            \includegraphics[width=\linewidth]{images/under.png}
-                            \caption{After Under Sampling}
-        \end{subfigure}
-    \end{figure}
-
-
-
-\section{Model}
-Our project follows the following pipeline. \par
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=15cm ,keepaspectratio]{pipeline}
-
-    \caption{Pipeline}
-\end{figure} 
-Given that we have different types of data (dates, comment/post title) we have four different models each handling a different form of data. This is also contributing to boosting the accuracy given that the models have varying F1 Scores.\\
-For each subset of the data We have a the following models
-\begin{enumerate}
-    \item comment Sub-reddit model
-    \item comment body model
-    \item Post title model
-    \item Post Sub-reddit model
-\end{enumerate}
     
-For each one of the mentioned models, we experimented with different combinations of the following models: SVM , Logistical Regression, Neural Networks , KNN and Naive Bayes. 
-        \begin{itemize}
-        \item \textbf{SVM}:  The SVM model was proposed by Cortes and Vapnik. It is a supervised learning model mostly used for classification and regression problems. The SVM aims at calculating the weights w and bias b such that the hyperplane found perfectly separates the data while maximizing the margin.
+\section{Model}
+    Our project follows the following pipeline. \par
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=15cm ,keepaspectratio]{pipeline}
+        \caption{Database relational model}
+    \end{figure} 
+    Given that we have different types of data (dates, comment/post title) we have four different models each handling a different form of data. This is also contributing to boosting the accuracy given that the models have varying F1 Scores.\\
+    For each subset of the data We have a the following models
+    \begin{enumerate}
+        \item comment Sub-reddit model
+        \item comment body model
+        \item Post title model
+        \item Post Sub-reddit model
+    \end{enumerate}
+    
+    \subsection{Comment Sub-reddit}
+        We experimented the following models: (SVM, LOGREG write yours here )\\
+        The best model was [] with [score here]
+    \subsection{Comment Body}
+        We experimented the following models: \\ Support Vector Machines, Logistical Regression, and Neural Networks \\
+\\
+        The best model was Logistical Regression with an accuracy of 0.905
+        
+    \subsection{Post Title}      
+    During the classification of  the Post Title model, we used four models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used:         Support Vector Machines, Logistical Regression , Naive Bayes and KNN.
+    
+    \subsubsection{Support Vector Machines (SVM):}
+    
+    The SVM model was proposed by Cortes and Vapnik. It is a supervised learning model mostly used for classification and regression problems. The SVM aims at calculating the weights w and bias b such that the hyperplane found perfectly separates the data while maximizing the margin.
     
     For an efficient non-linear transformation, we used kernels.
+we used a linear kernel, scoring an accuracy of 0.892       
+
+    \subsubsection{Naive Bayes:}
+    Naive Bayes classifiers are a collection of classification algorithms based on Bayes’ Theorem, and acheived the lowest accuracy on the test dataset, and it was 0.609.
     
-    The first kernel used was linear and the second was polynomial.
-        \item \textbf{Logistical Regression} :     Logistic regression is a statistical model used for binary classification, and it can be generalized to multiclass classification. \\
+    \subsubsection{Logistic Regression Model:}
+    
+    Logistic regression is a statistical model used for binary classification, and it can be generalized to multiclass classification. \\
 Logistic regression uses the Sigmoid Function, that is $\frac{1}{1+e^{-x}}$\\ \\ It outputs a value between 0 and 1, that's the probability if the positive label class. Here, it's the $isBot$ label, and if it's greater than 0.5, the $isBot$ will be equal $True$, else the $isBot$ will be equal $False$.  \\ \\
 Logistic Regression try to minimize the "cross-entropy error", that is:\\ $\frac{1}{N} \sum_{n=1}^{N} ln(1 + e^ {-y_{n}w^Tx_n}) = 1$\\ \\
 It is an extensively employed algorithm for classification in industry because of it's simplicity and good results. \\
+The logistic regression takes a regularization parameter, "C", and after hyper parameter tuning, C was selected to be 3, achieving an accuracy of 0.904. 
 
-        \item \textbf{Neural Networks}     Neural network is based on contextual long short-term memory architecture that exploits both content and metadata to detect bots at the post level: the pre-processed data was fed as  input to the network in order to see whether it consists of a bot or genuine user. 
+ \subsubsection{k-Nearest Neighbors (KNN):}   
+Briefly, K-NN algorithm assumes the similarity between the new case/data and available cases and put the new case into the category that is most similar to the available categories.
+After hyper parameter tuning, "K" (number of Neighbors) was selected to be 10, achieving an accuracy of 0.877. 
+
+        The best model was Logistical Regression with an accuracy of 0.904
+
+    \subsection{Post Sub-reddit}  
+    
+    
+    During the classification of  the Sub-reddit model, we used three models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used: Support Vectors Machine(SVM), Logistic Regression, and Neural Networks.
+    
+    \subsubsection{SVM Model:}
+    
+    The SVM model was proposed by Cortes and Vapnik. It is a supervised learning model mostly used for classification and regression problems. The SVM aims at calculating the weights w and bias b such that the hyperplane found perfectly separates the data while maximizing the margin.
+    
+    For an efficient non-linear transformation, we used kernels.
+    
+    The first kernel used was linear and the second was polynomial. During the exploration of both possibilities, we could report the following results:
+    
+    \begin{center}
+    \begin{tabular}{||c c||} 
+     \hline
+     Kernel & Accuracy    \\ [0.5ex] 
+     \hline\hline
+     Linear & 0.91  \\ 
+     \hline
+     Polynomial & 0.89  \\
+     \hline
+    \end{tabular}
+    \end{center}
+    
+    The polynomial kernel scored the highest, so we chose the SVM with this kernel.
+       
+
+    \subsubsection{Neural Networks Model:}
+    
+    Neural network is based on contextual long short-term memory architecture that exploits both content and metadata to detect bots at the post level: the pre-processed data was fed as  input to the network in order to see whether it consists of a bot or genuine user. 
     
     After the training using the ReLU activation function for the deep layers and Sigmoid activation function for the output layer knowing it consists of a binary classification.
     
     After training for 100 epochs, the accuracy on the test dataset was 0.89.
-
-        \item \textbf{KNN}: Briefly, K-NN algorithm assumes the similarity between the new case/data and available cases and put the new case into the category that is most similar to the available categories.
-
-        \item \textbf{Naive Bayes}:     Naive Bayes classifiers are a collection of classification algorithms based on Bayes’ Theorem.
-\\ \\ \\ \\ \\
-        \end{itemize} 
+    
+    \subsubsection{Logistic Regression Model:}
+    
+    Logistic regression is a statistical model used for binary classification, and it can be generalized to multiclass classification. \\
+Logistic regression uses the Sigmoid Function, that is $\frac{1}{1+e^{-x}}$\\ \\ It outputs a value between 0 and 1, that's the probability if the positive label class. Here, it's the $isBot$ label, and if it's greater than 0.5, the $isBot$ will be equal $True$, else the $isBot$ will be equal $False$.  \\ \\
+Logistic Regression try to minimize the "cross-entropy error", that is:\\ $\frac{1}{N} \sum_{n=1}^{N} ln(1 + e^ {-y_{n}w^Tx_n}) = 1$\\ \\
+It is an extensively employed algorithm for classification in industry because of it's simplicity and good results. \\
+The logistic regression takes a regularization parameter, "C", and after hyper parameter tuning, C was selected to be 3, achieving an accuracy of 0.923. 
         
-
-    \subsection{Comment Subreddit}
-    The comment subreddit is the subreddit at which the comment was posted. \\
-    During the classification of  the subreddit model, we used three models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used: Support Vectors Machine(SVM), Logistic Regression, and Neural Networks.
-    For logistical Regression and SVM, we performed hyperparameter tuning using grid search, and random search for neural networks.
- 
-        \begin{center}
-    \begin{tabular}{|c || c| c|} 
-     \hline
-     Model & Accuracy  & F1 Score  \\ [0.5ex] 
-     \hline\hline
-     SVM Linear & 0.86  &0.83 \\ 
-     \hline
-     SVM Polynomial & 0.86 &0.84 \\
-     \hline
-     Logistical Regression & 0.87 & 0.84  \\ 
-     \hline
-     Neural Networks & 0.84  & 0.82\\
-     \hline
-
-    \end{tabular}
-    \end{center}
-
-    \subsection{Comment Body}
-    During the classification of  the subreddit model, we used three models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used: Support Vectors Machine(SVM), Logistic Regression, and Neural Networks.
-    For logistical Regression and SVM, we performed hyperparameter tuning using grid search, and random search for neural networks.
-        \begin{center}
-    \begin{tabular}{|c || c| c|} 
-     \hline
-     Model & Accuracy  & F1 Score  \\ [0.5ex] 
-     \hline\hline
-     SVM Linear & 0.90  & 0.88 \\ 
-     \hline
-     SVM Polynomial & 0.91 &0.90 \\
-     \hline
-     Logistical Regression & 0.91 & 0.91  \\ 
-     \hline
-     Neural Networks & 0.90  & 0.90\\
-     \hline
-
-    \end{tabular}
-    \end{center}
-
-
-    \subsection{Post Title}
-    The post title is the text of the post title. \\
-    We did not consider the posts bodies as it has no limit, and can include videos, images, tables, index tables...\\
-    During the classification of  the Post Title model, we used four models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used:         Support Vector Machines, Logistical Regression , Naive Bayes and KNN.
-    For logistical Regression, SVM, KNN, we performed hyperparameter tuning using grid search, random search for neural networks, and no hyperparameter tuning for Naive Bayes, as there are parameters to tune.
-
-        \begin{center}
-    \begin{tabular}{|c || c| c|} 
-     \hline
-     Model & Accuracy  & F1 Score  \\ [0.5ex] 
-     \hline\hline
-     SVM Linear & 0.89  & 0.89 \\ 
-     \hline
-     KNN & 0.87 & 0.84 \\
-     \hline
-     Naive Bayes & 0.61 &0.66 \\
-     \hline
-     Logistical Regression & 0.91 & 0.89  \\ 
-     \hline
-    \end{tabular}
-    \end{center}
-    
-    \subsection{Post subreddit}  
-    
-        The comment subreddit is the subreddit at which the post was posted. \\
-    During the classification of  the subreddit model, we used three models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used: Support Vectors Machine(SVM), Logistic Regression, and Neural Networks.
-For logistical Regression and SVM, we performed hyperparameter tuning using grid search, random search for neural networks.
-
-        \begin{center}
-    \begin{tabular}{|c || c| c|} 
-     \hline
-     Model & Accuracy  & F1 Score  \\ [0.5ex] 
-     \hline\hline
-     SVM Linear & 0.91  & 0.90 \\ 
-     \hline
-     SVM Polynomial & 0.89 &0.89 \\
-     \hline
-     Logistical Regression & 0.90 & 0.90  \\ 
-     \hline
-     Neural Networks & 0.90  & 0.89\\
-     \hline
-
-    \end{tabular}
-    \end{center}  
-    
-            \subsection{Disregarded experiments:}
-        We have experimented with model aggregation, we performed weighted average vote using the following formula:
-        $$AggregatedProbability = \frac{(f1_A * model_A) 
-                                    + (f1_B * outProb_B) 
-                                    + (f1_C * outProb_c) 
-                                    + (f1_D * outProb_D)}{4}$$
-        This experiment did not yield any good results given the scarcity of the data because not all normal users and bots have enough posts and comments, most posts and comments belong to a smaller subset of the collected accounts.\par
-        We have also experimented with compost features regarding the users' behavior (frequency of posting and comments, times of posting and commenting). This experiment also did not yield any promising results, and with a further investigation of our data and its source we discovered that an analysis conducted on the same dataset at Boston University discovered that all the Russian bot accounts were mirroring the behavior of the normal users.\par
 
 \section{Results}
     
-    \subsection{Learning curves}
+\subsection{Learning curves}
     
-   \begin{figure}[H]
+    \begin{figure}[H]
         \begin{subfigure}[t]{.5\textwidth}
             \centering
             \includegraphics[width=\linewidth]{1}
@@ -293,6 +217,7 @@ For logistical Regression and SVM, we performed hyperparameter tuning using grid
             \includegraphics[width=\linewidth]{4}
         \end{subfigure}
     \end{figure}
+
         
     \subsection{Classification Reports / Confusion matrices}
 The best model for all 4 detection level is logistical regression. \\ \\
@@ -306,9 +231,7 @@ The best model for all 4 detection level is logistical regression. \\ \\
   Post Subreddit  & 0.92    &0.92 & 0.93 & 585\\
  \hline
 \end{tabular}
-
- 
  \section{Conclusion}
- Detecting bots by analyzing their behavior was a difficult task given the scarcity of the data and the mirroring behavior of most bot accounts in our dataset, since they can behaved approximately like any other user. However, inspecting the language they use to post and comment and the textual patterns they follow to do so, proved to be quite effective and yielded high F1 scores and high Accuracy
-
+ Detecting bots by analyzing their behavior was a difficult task given the scarcity of the data and the mirroring behavior of most bot accounts in our dataset, since they can behaved approximately like any other user. However, inspecting the language they use to post and comment and the textual patterns they follow to do so, proved to be quite effective and yielded high F1 scores and high Accuracy. \par
+ The next step is to further experiment with word embedding models and contextual analysis to boost our metrics (F1, Accuracy). Our aim is to squeeze out more features from the existing dataset to compensate for the small amount of data about bots. In addition to that deploy the models and provide a user interface for Reddit users to try our tool. \par
 \end{document}
