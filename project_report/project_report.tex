@@ -4,9 +4,12 @@
 \usepackage{subcaption}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
 
 \title{CMPS 287 - Final Project Report}
-\author{Nathalie Nassar, \\Majd Al-Kawaas,\\ Mohamed Louai Bouzaher,\\ and Melhem Rahme}
+\author{Majd Al-Kawaas  \hspace*{5mm} \url{mma250@mail.aub.edu},\\  Melhem Rahmeh \hspace*{5mm} \url{mfr08@mail.aub.edu}, \\ Mohamed Louai Bouzaher \hspace*{5mm} \url{mlb03@mail.aub.edu},\\ Nathalie Nassar \hspace*{5mm} \url{nwn05@mail.aub.edu}
+
+}
 \date{May 2022}
 
 \begin{document}
@@ -98,169 +101,118 @@ The dataset consist of three main parts and each part has of the following featu
         \item Post subreddit model
     \end{enumerate}
     
-    For each one of the mentioned models, we experimented different combinations of the following models: SVM , Logistical Regression, Neural Networks , KNN and Naive Bayes. 
-        \begin{enumerate}
-        \item SVM
-        \item Logistical Regression
-        \item Neural Networks
-        \item KNN
-        \item Naive Bayes
-    \end{enumerate}
+For each one of the mentioned models, we experimented with different combinations of the following models: SVM , Logistical Regression, Neural Networks , KNN and Naive Bayes. 
+        \begin{itemize}
+        \item \textbf{SVM}:  The SVM model was proposed by Cortes and Vapnik. It is a supervised learning model mostly used for classification and regression problems. The SVM aims at calculating the weights w and bias b such that the hyperplane found perfectly separates the data while maximizing the margin.
+    
+    For an efficient non-linear transformation, we used kernels.
+    
+    The first kernel used was linear and the second was polynomial.
+        \item \textbf{Logistical Regression} :     Logistic regression is a statistical model used for binary classification, and it can be generalized to multiclass classification. \\
+Logistic regression uses the Sigmoid Function, that is $\frac{1}{1+e^{-x}}$\\ \\ It outputs a value between 0 and 1, that's the probability if the positive label class. Here, it's the $isBot$ label, and if it's greater than 0.5, the $isBot$ will be equal $True$, else the $isBot$ will be equal $False$.  \\ \\
+Logistic Regression try to minimize the "cross-entropy error", that is:\\ $\frac{1}{N} \sum_{n=1}^{N} ln(1 + e^ {-y_{n}w^Tx_n}) = 1$\\ \\
+It is an extensively employed algorithm for classification in industry because of it's simplicity and good results. \\
+
+        \item \textbf{Neural Networks}     Neural network is based on contextual long short-term memory architecture that exploits both content and metadata to detect bots at the post level: the pre-processed data was fed as  input to the network in order to see whether it consists of a bot or genuine user. 
+    
+    After the training using the ReLU activation function for the deep layers and Sigmoid activation function for the output layer knowing it consists of a binary classification.
+    
+    After training for 100 epochs, the accuracy on the test dataset was 0.89.
+
+        \item \textbf{KNN}: Briefly, K-NN algorithm assumes the similarity between the new case/data and available cases and put the new case into the category that is most similar to the available categories.
+
+        \item \textbf{Naive Bayes}:     Naive Bayes classifiers are a collection of classification algorithms based on Bayes’ Theorem.
+\\ \\ \\ \\ \\
+        \end{itemize} 
+        
 
     \subsection{Comment Subreddit}
+    The comment subreddit is the subreddit at which the comment was posted. \\
     During the classification of  the subreddit model, we used three models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used: Support Vectors Machine(SVM), Logistic Regression, and Neural Networks.
-    
-    \subsubsection{SVM Model:}
-    
-    The SVM model was proposed by Cortes and Vapnik. It is a supervised learning model mostly used for classification and regression problems. The SVM aims at calculating the weights w and bias b such that the hyperplane found perfectly separates the data while maximizing the margin.
-    
-    For an efficient non-linear transformation, we used kernels.
-    
-    The first kernel used was linear and the second was polynomial. During the exploration of both possibilities, we could report the following results:
-    
-    \begin{center}
-    \begin{tabular}{||c c||} 
+    For logistical Regression and SVM, we performed hyperparameter tuning using grid search, and random search for neural networks.
+ 
+        \begin{center}
+    \begin{tabular}{|c || c| c|} 
      \hline
-     Kernel & Accuracy    \\ [0.5ex] 
+     Model & Accuracy  & F1 Score  \\ [0.5ex] 
      \hline\hline
-     Linear & 0.91  \\ 
+     SVM Linear & 0.86  &0.83 \\ 
      \hline
-     Polynomial & 0.89  \\
+     SVM Polynomial & 0.86 &0.84 \\
      \hline
+     Logistical Regression & 0.87 & 0.84  \\ 
+     \hline
+     Neural Networks & 0.84  & 0.82\\
+     \hline
+
     \end{tabular}
     \end{center}
-    
-    The polynomial kernel scored the highest, so we chose the SVM with this kernel.
-       
 
-    \subsubsection{Neural Networks Model:}
-    
-    Neural network is based on contextual long short-term memory architecture that exploits both content and metadata to detect bots at the post level: the pre-processed data was fed as  input to the network in order to see whether it consists of a bot or genuine user. 
-    
-    After the training using the ReLU activation function for the deep layers and Sigmoid activation function for the output layer knowing it consists of a binary classification.
-    
-    After training for 100 epochs, the accuracy on the test dataset was 0.89.
-    
-    \subsubsection{Logistic Regression Model:}
-    
-    Logistic regression is a statistical model used for binary classification, and it can be generalized to multiclass classification. \\
-Logistic regression uses the Sigmoid Function, that is $\frac{1}{1+e^{-x}}$\\ \\ It outputs a value between 0 and 1, that's the probability if the positive label class. Here, it's the $isBot$ label, and if it's greater than 0.5, the $isBot$ will be equal $True$, else the $isBot$ will be equal $False$.  \\ \\
-Logistic Regression try to minimize the "cross-entropy error", that is:\\ $\frac{1}{N} \sum_{n=1}^{N} ln(1 + e^ {-y_{n}w^Tx_n}) = 1$\\ \\
-It is an extensively employed algorithm for classification in industry because of it's simplicity and good results. \\
-The logistic regression takes a regularization parameter, "C", and after hyper parameter tuning, C was selected to be 3, achieving an accuracy of 0.923.  \\ \\ \\ \\ \\ 
     \subsection{Comment Body}
     During the classification of  the subreddit model, we used three models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used: Support Vectors Machine(SVM), Logistic Regression, and Neural Networks.
-    
-    \subsubsection{SVM Model:}
-    
-    The SVM model was proposed by Cortes and Vapnik. It is a supervised learning model mostly used for classification and regression problems. The SVM aims at calculating the weights w and bias b such that the hyperplane found perfectly separates the data while maximizing the margin.
-    
-    For an efficient non-linear transformation, we used kernels.
-    
-    The first kernel used was linear and the second was polynomial. During the exploration of both possibilities, we could report the following results:
-    
-    \begin{center}
-    \begin{tabular}{||c c||} 
+    For logistical Regression and SVM, we performed hyperparameter tuning using grid search, and random search for neural networks.
+        \begin{center}
+    \begin{tabular}{|c || c| c|} 
      \hline
-     Kernel & Accuracy    \\ [0.5ex] 
+     Model & Accuracy  & F1 Score  \\ [0.5ex] 
      \hline\hline
-     Linear & 0.91  \\ 
+     SVM Linear & 0.90  & 0.88 \\ 
      \hline
-     Polynomial & 0.89  \\
+     SVM Polynomial & 0.91 &0.90 \\
+     \hline
+     Logistical Regression & 0.91 & 0.91  \\ 
+     \hline
+     Neural Networks & 0.90  & 0.90\\
+     \hline
+
+    \end{tabular}
+    \end{center}
+
+
+    \subsection{Post Title}
+    The post title is the text of the post title. \\
+    We did not consider the posts bodies as it has no limit, and can include videos, images, tables, index tables...\\
+    During the classification of  the Post Title model, we used four models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used:         Support Vector Machines, Logistical Regression , Naive Bayes and KNN.
+    For logistical Regression, SVM, KNN, we performed hyperparameter tuning using grid search, random search for neural networks, and no hyperparameter tuning for Naive Bayes, as there are parameters to tune.
+
+        \begin{center}
+    \begin{tabular}{|c || c| c|} 
+     \hline
+     Model & Accuracy  & F1 Score  \\ [0.5ex] 
+     \hline\hline
+     SVM Linear & 0.89  & 0.89 \\ 
+     \hline
+     KNN & 0.87 & 0.84 \\
+     \hline
+     Naive Bayes & 0.61 &0.66 \\
+     \hline
+     Logistical Regression & 0.91 & 0.89  \\ 
      \hline
     \end{tabular}
     \end{center}
     
-    The polynomial kernel scored the highest, so we chose the SVM with this kernel.
-       
-
-    \subsubsection{Neural Networks Model:}
-    
-    Neural network is based on contextual long short-term memory architecture that exploits both content and metadata to detect bots at the post level: the pre-processed data was fed as  input to the network in order to see whether it consists of a bot or genuine user. 
-    
-    After the training using the ReLU activation function for the deep layers and Sigmoid activation function for the output layer knowing it consists of a binary classification.
-    
-    After training for 100 epochs, the accuracy on the test dataset was 0.89.
-    
-    \subsubsection{Logistic Regression Model:}
-    
-    Logistic regression is a statistical model used for binary classification, and it can be generalized to multiclass classification. \\
-Logistic regression uses the Sigmoid Function, that is $\frac{1}{1+e^{-x}}$\\ \\ It outputs a value between 0 and 1, that's the probability if the positive label class. Here, it's the $isBot$ label, and if it's greater than 0.5, the $isBot$ will be equal $True$, else the $isBot$ will be equal $False$.  \\ \\
-Logistic Regression try to minimize the "cross-entropy error", that is:\\ $\frac{1}{N} \sum_{n=1}^{N} ln(1 + e^ {-y_{n}w^Tx_n}) = 1$\\ \\
-It is an extensively employed algorithm for classification in industry because of it's simplicity and good results. \\
-The logistic regression takes a regularization parameter, "C", and after hyper parameter tuning, C was selected to be 3, achieving an accuracy of 0.923.  \\ \\ \\ \\ \\ 
-        
-    \subsection{Post Title}      
-    During the classification of  the Post Title model, we used four models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used:         Support Vector Machines, Logistical Regression , Naive Bayes and KNN.
-    
-    \subsubsection{Support Vector Machines (SVM):}
-    
-    The SVM model was proposed by Cortes and Vapnik. It is a supervised learning model mostly used for classification and regression problems. The SVM aims at calculating the weights w and bias b such that the hyperplane found perfectly separates the data while maximizing the margin.
-    
-    For an efficient non-linear transformation, we used kernels.
-we used a linear kernel, scoring an accuracy of 0.892       
-
-    \subsubsection{Naive Bayes:}
-    Naive Bayes classifiers are a collection of classification algorithms based on Bayes’ Theorem, and acheived the lowest accuracy on the test dataset, and it was 0.609.
-    
-    \subsubsection{Logistic Regression Model:}
-    
-    Logistic regression is a statistical model used for binary classification, and it can be generalized to multiclass classification. \\
-Logistic regression uses the Sigmoid Function, that is $\frac{1}{1+e^{-x}}$\\ \\ It outputs a value between 0 and 1, that's the probability if the positive label class. Here, it's the $isBot$ label, and if it's greater than 0.5, the $isBot$ will be equal $True$, else the $isBot$ will be equal $False$.  \\ \\
-Logistic Regression try to minimize the "cross-entropy error", that is:\\ $\frac{1}{N} \sum_{n=1}^{N} ln(1 + e^ {-y_{n}w^Tx_n}) = 1$\\ \\
-It is an extensively employed algorithm for classification in industry because of it's simplicity and good results. \\
-The logistic regression takes a regularization parameter, "C", and after hyper parameter tuning, C was selected to be 3, achieving an accuracy of 0.904. 
-
- \subsubsection{k-Nearest Neighbors (KNN):}   
-Briefly, K-NN algorithm assumes the similarity between the new case/data and available cases and put the new case into the category that is most similar to the available categories.
-After hyper parameter tuning, "K" (number of Neighbors) was selected to be 10, achieving an accuracy of 0.877. 
-
-        The best model was Logistical Regression with an accuracy of 0.904
-
     \subsection{Post subreddit}  
     
-    
+        The comment subreddit is the subreddit at which the post was posted. \\
     During the classification of  the subreddit model, we used three models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used: Support Vectors Machine(SVM), Logistic Regression, and Neural Networks.
-    
-    \subsubsection{SVM Model:}
-    
-    The SVM model was proposed by Cortes and Vapnik. It is a supervised learning model mostly used for classification and regression problems. The SVM aims at calculating the weights w and bias b such that the hyperplane found perfectly separates the data while maximizing the margin.
-    
-    For an efficient non-linear transformation, we used kernels.
-    
-    The first kernel used was linear and the second was polynomial. During the exploration of both possibilities, we could report the following results:
-    
-    \begin{center}
-    \begin{tabular}{||c c||} 
-     \hline
-     Kernel & Accuracy    \\ [0.5ex] 
-     \hline\hline
-     Linear & 0.91  \\ 
-     \hline
-     Polynomial & 0.89  \\
-     \hline
-    \end{tabular}
-    \end{center}
-    
-    The polynomial kernel scored the highest, so we chose the SVM with this kernel.
-       
+For logistical Regression and SVM, we performed hyperparameter tuning using grid search, random search for neural networks.
 
-    \subsubsection{Neural Networks Model:}
-    
-    Neural network is based on contextual long short-term memory architecture that exploits both content and metadata to detect bots at the post level: the pre-processed data was fed as  input to the network in order to see whether it consists of a bot or genuine user. 
-    
-    After the training using the ReLU activation function for the deep layers and Sigmoid activation function for the output layer knowing it consists of a binary classification.
-    
-    After training for 100 epochs, the accuracy on the test dataset was 0.89.
-    
-    \subsubsection{Logistic Regression Model:}
-    
-    Logistic regression is a statistical model used for binary classification, and it can be generalized to multiclass classification. \\
-Logistic regression uses the Sigmoid Function, that is $\frac{1}{1+e^{-x}}$\\ \\ It outputs a value between 0 and 1, that's the probability if the positive label class. Here, it's the $isBot$ label, and if it's greater than 0.5, the $isBot$ will be equal $True$, else the $isBot$ will be equal $False$.  \\ \\
-Logistic Regression try to minimize the "cross-entropy error", that is:\\ $\frac{1}{N} \sum_{n=1}^{N} ln(1 + e^ {-y_{n}w^Tx_n}) = 1$\\ \\
-It is an extensively employed algorithm for classification in industry because of it's simplicity and good results. \\
-The logistic regression takes a regularization parameter, "C", and after hyper parameter tuning, C was selected to be 3, achieving an accuracy of 0.923.  \\ \\ \\ \\ \\ 
-        
+        \begin{center}
+    \begin{tabular}{|c || c| c|} 
+     \hline
+     Model & Accuracy  & F1 Score  \\ [0.5ex] 
+     \hline\hline
+     SVM Linear & 0.91  & 0.90 \\ 
+     \hline
+     SVM Polynomial & 0.89 &0.89 \\
+     \hline
+     Logistical Regression & 0.90 & 0.90  \\ 
+     \hline
+     Neural Networks & 0.90  & 0.89\\
+     \hline
+
+    \end{tabular}
+    \end{center}        
 \section{Results}
     
     \subsection{Learning curves}
