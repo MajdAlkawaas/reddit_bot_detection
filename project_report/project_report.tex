@@ -1,7 +1,9 @@
 \documentclass{article}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
+\usepackage{subcaption}
 \usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
 
 \title{CMPS 287 - Final Project Report}
 \author{Nathalie Nassar, \\Majd Al-Kawaas,\\ Mohamed Louai Bouzaher,\\ and Melhem Rahme}
@@ -96,13 +98,97 @@ The dataset consist of three main parts and each part has of the following featu
         \item Post subreddit model
     \end{enumerate}
     
+    For each one of the mentioned models, we experimented different combinations of the following models: SVM , Logistical Regression, Neural Networks , KNN and Naive Bayes. 
+        \begin{enumerate}
+        \item SVM
+        \item Logistical Regression
+        \item Neural Networks
+        \item KNN
+        \item Naive Bayes
+    \end{enumerate}
+
     \subsection{Comment Subreddit}
-        We experimented the following models: (SVM, LOGREG write yours here )\\
-        The best model was [] with [score here]
+    During the classification of  the subreddit model, we used three models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used: Support Vectors Machine(SVM), Logistic Regression, and Neural Networks.
+    
+    \subsubsection{SVM Model:}
+    
+    The SVM model was proposed by Cortes and Vapnik. It is a supervised learning model mostly used for classification and regression problems. The SVM aims at calculating the weights w and bias b such that the hyperplane found perfectly separates the data while maximizing the margin.
+    
+    For an efficient non-linear transformation, we used kernels.
+    
+    The first kernel used was linear and the second was polynomial. During the exploration of both possibilities, we could report the following results:
+    
+    \begin{center}
+    \begin{tabular}{||c c||} 
+     \hline
+     Kernel & Accuracy    \\ [0.5ex] 
+     \hline\hline
+     Linear & 0.91  \\ 
+     \hline
+     Polynomial & 0.89  \\
+     \hline
+    \end{tabular}
+    \end{center}
+    
+    The polynomial kernel scored the highest, so we chose the SVM with this kernel.
+       
+
+    \subsubsection{Neural Networks Model:}
+    
+    Neural network is based on contextual long short-term memory architecture that exploits both content and metadata to detect bots at the post level: the pre-processed data was fed as  input to the network in order to see whether it consists of a bot or genuine user. 
+    
+    After the training using the ReLU activation function for the deep layers and Sigmoid activation function for the output layer knowing it consists of a binary classification.
+    
+    After training for 100 epochs, the accuracy on the test dataset was 0.89.
+    
+    \subsubsection{Logistic Regression Model:}
+    
+    Logistic regression is a statistical model used for binary classification, and it can be generalized to multiclass classification. \\
+Logistic regression uses the Sigmoid Function, that is $\frac{1}{1+e^{-x}}$\\ \\ It outputs a value between 0 and 1, that's the probability if the positive label class. Here, it's the $isBot$ label, and if it's greater than 0.5, the $isBot$ will be equal $True$, else the $isBot$ will be equal $False$.  \\ \\
+Logistic Regression try to minimize the "cross-entropy error", that is:\\ $\frac{1}{N} \sum_{n=1}^{N} ln(1 + e^ {-y_{n}w^Tx_n}) = 1$\\ \\
+It is an extensively employed algorithm for classification in industry because of it's simplicity and good results. \\
+The logistic regression takes a regularization parameter, "C", and after hyper parameter tuning, C was selected to be 3, achieving an accuracy of 0.923.  \\ \\ \\ \\ \\ 
     \subsection{Comment Body}
-        We experimented the following models: \\ Support Vector Machines, Logistical Regression, and Neural Networks \\
-\\
-        The best model was Logistical Regression with an accuracy of 0.905
+    During the classification of  the subreddit model, we used three models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used: Support Vectors Machine(SVM), Logistic Regression, and Neural Networks.
+    
+    \subsubsection{SVM Model:}
+    
+    The SVM model was proposed by Cortes and Vapnik. It is a supervised learning model mostly used for classification and regression problems. The SVM aims at calculating the weights w and bias b such that the hyperplane found perfectly separates the data while maximizing the margin.
+    
+    For an efficient non-linear transformation, we used kernels.
+    
+    The first kernel used was linear and the second was polynomial. During the exploration of both possibilities, we could report the following results:
+    
+    \begin{center}
+    \begin{tabular}{||c c||} 
+     \hline
+     Kernel & Accuracy    \\ [0.5ex] 
+     \hline\hline
+     Linear & 0.91  \\ 
+     \hline
+     Polynomial & 0.89  \\
+     \hline
+    \end{tabular}
+    \end{center}
+    
+    The polynomial kernel scored the highest, so we chose the SVM with this kernel.
+       
+
+    \subsubsection{Neural Networks Model:}
+    
+    Neural network is based on contextual long short-term memory architecture that exploits both content and metadata to detect bots at the post level: the pre-processed data was fed as  input to the network in order to see whether it consists of a bot or genuine user. 
+    
+    After the training using the ReLU activation function for the deep layers and Sigmoid activation function for the output layer knowing it consists of a binary classification.
+    
+    After training for 100 epochs, the accuracy on the test dataset was 0.89.
+    
+    \subsubsection{Logistic Regression Model:}
+    
+    Logistic regression is a statistical model used for binary classification, and it can be generalized to multiclass classification. \\
+Logistic regression uses the Sigmoid Function, that is $\frac{1}{1+e^{-x}}$\\ \\ It outputs a value between 0 and 1, that's the probability if the positive label class. Here, it's the $isBot$ label, and if it's greater than 0.5, the $isBot$ will be equal $True$, else the $isBot$ will be equal $False$.  \\ \\
+Logistic Regression try to minimize the "cross-entropy error", that is:\\ $\frac{1}{N} \sum_{n=1}^{N} ln(1 + e^ {-y_{n}w^Tx_n}) = 1$\\ \\
+It is an extensively employed algorithm for classification in industry because of it's simplicity and good results. \\
+The logistic regression takes a regularization parameter, "C", and after hyper parameter tuning, C was selected to be 3, achieving an accuracy of 0.923.  \\ \\ \\ \\ \\ 
         
     \subsection{Post Title}      
     During the classification of  the Post Title model, we used four models in order to evaluate their efficiency in correctly predicting bots from normal users. For that, we used:         Support Vector Machines, Logistical Regression , Naive Bayes and KNN.
@@ -173,74 +259,49 @@ After hyper parameter tuning, "K" (number of Neighbors) was selected to be 10, a
 Logistic regression uses the Sigmoid Function, that is $\frac{1}{1+e^{-x}}$\\ \\ It outputs a value between 0 and 1, that's the probability if the positive label class. Here, it's the $isBot$ label, and if it's greater than 0.5, the $isBot$ will be equal $True$, else the $isBot$ will be equal $False$.  \\ \\
 Logistic Regression try to minimize the "cross-entropy error", that is:\\ $\frac{1}{N} \sum_{n=1}^{N} ln(1 + e^ {-y_{n}w^Tx_n}) = 1$\\ \\
 It is an extensively employed algorithm for classification in industry because of it's simplicity and good results. \\
-The logistic regression takes a regularization parameter, "C", and after hyper parameter tuning, C was selected to be 3, achieving an accuracy of 0.923. 
+The logistic regression takes a regularization parameter, "C", and after hyper parameter tuning, C was selected to be 3, achieving an accuracy of 0.923.  \\ \\ \\ \\ \\ 
         
 \section{Results}
     
     \subsection{Learning curves}
-    \includegraphics[width=15cm, height=10cm]{1}\\
-    \includegraphics[width=15cm, height=10cm]{2}\\ \\ 
-    \includegraphics[width=13.5cm, height=9cm]{3}\\
-    \includegraphics[width=13.5cm, height=9cm]{4}\\ \\ \\ \\
+    
+    \begin{figure}
+  \begin{subfigure}[t]{.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{1}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{2}
+  \end{subfigure}
 
+  \medskip
+
+  \begin{subfigure}[t]{.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{3}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{4}
+  \end{subfigure}
+\end{figure}
+        
     \subsection{Classification Reports / Confusion matrices}
-    \subsubsection{Comment Subreddit (Logistic Regression):}
-    
-     \begin{verbatim}
-                precision    recall  f1-score   support
-           0       0.91      0.98      0.95       459
-           1       0.88      0.52      0.65        94
+The best model for all 4 detection level is logistical regression. \\ \\
+    \begin{tabular}{ |p{3.5cm}||p{3cm}|p{3cm}| p{3cm}|p{3cm}|  }
+\hline
+ Model / Metric & F1 Score & Accuracy& Precision & Support \\
+ \hline
+ Comment Subreddit   & 0.90    &0.91 & 0.90& 553\\
+  Comment Body   & 0.91    & 0.91 & 0.92 & 20238\\
+  Post Title & 0.89    &0.90 & 0.90 & 24917 \\
+  Post Subreddit  & 0.92    &0.92 & 0.93 & 585\\
+ \hline
+\end{tabular}
 
-    accuracy                           0.91       553
-   macro avg       0.89      0.75      0.80       553
-weighted avg       0.90      0.91      0.90       553
-
-Accuracy:  0.9059674502712477
- 
- \end{verbatim}
-
-    \subsubsection{Comment Body (Logistic Regression):}
-    
-     \begin{verbatim}
-                precision    recall  f1-score   support
-           0       0.90      0.99      0.94     15001
-           1       0.95      0.70      0.81      5237
-
-    accuracy                           0.91     20238
-   macro avg       0.93      0.84      0.88     20238
-weighted avg       0.92      0.91      0.91     20238
-
-Accuracy:  0.9131831208617452
- 
- \end{verbatim}
-
-    \subsubsection{Post Title (Logistic Regression):}
-         \begin{verbatim}
-                precision    recall  f1-score   support
-           0       0.91      0.98      0.95     21304
-           1       0.80      0.45      0.58      3613
-
-    accuracy                           0.90     24917
-   macro avg       0.86      0.72      0.76     24917
-weighted avg       0.90      0.90      0.89     24917
-
-Accuracy:  0.9043624834450376
- 
- \end{verbatim}
-
-    \subsubsection{Post Subreddit(Logistic Regression):}
-
-     \begin{verbatim}
-                precision    recall  f1-score   support
-           0       0.91      1.00      0.95       427
-           1       0.98      0.73      0.84       158
-
-    accuracy                           0.92       585
-   macro avg       0.95      0.86      0.89       585
-weighted avg       0.93      0.92      0.92       585
-
-Accuracy:  0.9230769230769231 
- \end{verbatim}
  
  \section{Conclusion}
  Detecting bots by analyzing their behavior is a difficult task, since they can behave approximately like any other user. However, inspecting the language they use to post and comment and the pattern they follow to do so, helps us understand and detect them with high accuracy.
