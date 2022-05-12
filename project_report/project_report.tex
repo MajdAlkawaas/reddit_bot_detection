@@ -42,13 +42,13 @@ Reddit, also known as "the front page of the internet,” is a social media plat
 While bot detection is being explored on other high profile platforms such as Twitter with deep learning, there is extremely limited work on bot detection applications on Reddit, and in the wake of the ever-changing political and economic scene, there is an increasing need for accurate methods of detecting bots on such platform given that they become a source of information for millions of users. Moreover, The nature of Reddit enables a very suitable environment for bots from all the existing social media platforms. The behavior of these bots, on Reddit, is turning some of the communities into unsafe and insecure online spaces that require termination.
 
 \section{Related Work}
+
     As we have mentioned there is not much work on the Reddit bot detection issue but some parties are making some great efforts in this matter. Even Reddit never announced any in deepth details on their efforts or progress with this issue but some work on the matter has been done by Reddit community members.\par
     
      A group of graduate students at Stanford University worked on this problem for their thesis. They have applied deep learning to Reddit in an exploration of its viability in comment-level bot detection with a limited supervised dataset. They have performed a contextual analysis of the comments of these users using a variety of deep learning models and architectures (BERT and LSTM, RCNNs) they have achieved an AUC of 84.6\% using an RCNN architecture on their very minimal dataset.\par
      
      Medium project by Brandon Punturo, in this project the author dependent on the list of bots we are depending on. He built optimized random forest classifier and they final results and metrics were not promising.\par
      
-     [ADD A PARAGRAPH ABOUT THE PAPER WE ARE USING OR NOT]
      
      Despite the fact that Reddit has significantly less labeled bot datasets than Twitter, the issue is gaining traction, and Reddit has escalated its attempts to combat it. The data of around 900 Russian troll accounts that submitted over 7000 total comments was revealed in Reddit's 2017 transparency report, producing an extremely limited but workable supervised dataset. This list or Russian bots was started by a professor at Boston University and then Reddit took over the process \par
      
@@ -98,23 +98,37 @@ The dataset consist of three main parts and each part has of the following featu
                 \item Sub-reddit: the Sub-reddit at which the post was posted.
             \end{enumerate}
     \end{enumerate}
-As for data preprocessing, we have used  python and the Natural Language Toolkit (NLTK), we performed the following steps:\\
+As for \textbf{data preprocessing}, we have used  python and the Natural Language Toolkit (NLTK), we performed the following steps:\\
 \begin{enumerate}
     \item Removed all the special characters, stopwords, and all single characters,  and handled spacing and uppercases latters.
     \item Tokenization (for breaking phrases, and passages into tokens to help the computer understand the text). Experimented with both Stemming and lemmatization.
     \item Document Representation with TF-IDF (Term-Frequency Inverse Document-Frequency), to be able to represent each document as a vector of terms.
 \end{enumerate}
-Addressing imbalances in the dataset:\\
+\textbf{Addressing imbalances in the dataset}:\\
 
 For the comments body data, we have an extreme imbalance between the normal user class and the bot user class the original ratio of normal:bot is around 11:1  as you can see in the figure so we performed under sampling on the normal users class, and the new ratio of normal:bot is around 3:1.
 
+    \begin{figure}[H]
+
+        \begin{subfigure}[t]{.5\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{images/before.png}
+                \caption{Before Under Sampling}
+            \end{subfigure}
+        \hfill
+        \begin{subfigure}[t]{.5\textwidth}
+            \centering
+            \includegraphics[width=\linewidth]{images/under.png}
+                            \caption{After Under Sampling}
+        \end{subfigure}
+    \end{figure}
 
 \section{Model}
 Our project follows the following pipeline. \par
 \begin{figure}[H]
     \centering
     \includegraphics[width=15cm ,keepaspectratio]{pipeline}
-    \caption{Pipeline}
+    \caption{Database relational model}
 \end{figure} 
 Given that we have different types of data (dates, comment/post title) we have four different models each handling a different form of data. This is also contributing to boosting the accuracy given that the models have varying F1 Scores.\\
 For each subset of the data We have a the following models
@@ -236,7 +250,17 @@ For logistical Regression and SVM, we performed hyperparameter tuning using grid
      \hline
 
     \end{tabular}
-    \end{center}        
+    \end{center}  
+    
+            \subsection{Disregarded experiments:}
+        We have experimented with model aggregation, we performed weighted average vote using the following formula:
+        $$AggregatedProbability = \frac{(f1_A * model_A) 
+                                    + (f1_B * outProb_B) 
+                                    + (f1_C * outProb_c) 
+                                    + (f1_D * outProb_D)}{4}$$
+        This experiment did not yield any good results given the scarcity of the data because not all normal users and bots have enough posts and comments, most posts and comments belong to a smaller subset of the collected accounts.\\
+        We have also experimented with compost features regarding the users' behavior (frequency of posting and comments, times of posting and commenting). This experiment also did not yield any promising results, and with a further investigation of our data and its source we discovered that an analysis conducted on the same dataset at Boston University discovered that all the Russian bot accounts were mirroring the behavior of the normal users.
+        
 \section{Results}
     
     \subsection{Learning curves}
